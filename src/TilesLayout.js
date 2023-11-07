@@ -9,7 +9,7 @@ class TilesLayout extends Component {
     const hexagons = GridGenerator.parallelogram(-1, 1, -1, 2).map((hexagon, index) => {
       return Object.assign({}, hexagon, {
         text: `Cat #${index}`,
-        image: `http://lorempixel.com/400/400/cats/${index%10}/`
+        image: process.env.PUBLIC_URL + `/assets/token-${index%3}.png`
       });
     })
     this.state = { hexagons };
