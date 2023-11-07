@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { GridGenerator, Layout, Hexagon, Text, Pattern, HexUtils } from 'react-hexgrid';
 import './GameLayout.css';
+const log = require('loglevel');
+
+
 
 class GameLayout extends Component {
   constructor(props) {
@@ -10,6 +13,12 @@ class GameLayout extends Component {
     hexagons[0].blocked = true;
     hexagons[1].blocked = true;
     this.state = { hexagons };
+    log.setLevel('info');
+  }
+
+  // onClick event returns hex information
+  onClick(event, source) {
+    log.info(source.data);
   }
 
   // onDrop you can read information of the hexagon that initiated the drag
@@ -28,7 +37,7 @@ class GameLayout extends Component {
 
   onDragStart(event, source) {
     // If this tile is empty, let's disallow drag
-    if (!source.props.data.text) {
+    if (!source.data.text) {
       event.preventDefault();
     }
   }
@@ -42,7 +51,11 @@ class GameLayout extends Component {
       return HexUtils.equals(source.state.hex, blockedHex);
     });
 
-    const { text } = source.props.data;
+    if (!source) {
+      // added to prevent undefined property error
+      return;
+    }
+    const { text } = source.data;
     // Allow drop, if not blocked and there's no content already
     if (!blocked && !text) {
       // Call preventDefault if you want to allow drop
@@ -87,6 +100,7 @@ class GameLayout extends Component {
               onDragEnd={(e, h, s) => this.onDragEnd(e, h, s)}
               onDrop={(e, h, t) => this.onDrop(e, h, t) }
               onDragOver={(e, h) => this.onDragOver(e, h) }
+              onClick={(e, h) => this.onClick(e, h) }
             >
               <Text>{hex.text || HexUtils.getID(hex)}</Text>
               { hex.image && <Pattern id={HexUtils.getID(hex)} link={hex.image} /> }
