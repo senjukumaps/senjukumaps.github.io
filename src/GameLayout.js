@@ -2,13 +2,21 @@ import React, { Component } from 'react';
 import { GridGenerator, Layout, Hexagon, Text, Pattern, HexUtils } from 'react-hexgrid';
 import './GameLayout.css';
 const log = require('loglevel');
+import { TokenPattern } from './TokenPattern';
 
 
+class BackgroundImage extends Component {
+  render() {
+    return (
+      <image href={`${process.env.PUBLIC_URL}/assets/BoardMaps_Snow.png`} x="-75" y="-50" height="100%" width="100%"/>
+    );
+  }
+}
 
 class GameLayout extends Component {
   constructor(props) {
     super(props);
-    const hexagons = GridGenerator.hexagon(2);
+    const hexagons = GridGenerator.hexagon(3);
     // Add custom prop to couple of hexagons to indicate them being blocked
     hexagons[0].blocked = true;
     hexagons[1].blocked = true;
@@ -29,6 +37,7 @@ class GameLayout extends Component {
       if (HexUtils.equals(source.state.hex, hex)) {
         hex.image = targetProps.data.image;
         hex.text = targetProps.data.text;
+        hex.blocked = true;
       }
       return hex;
     });
@@ -76,6 +85,7 @@ class GameLayout extends Component {
       if (HexUtils.equals(source.state.hex, hex)) {
         hex.text = null;
         hex.image = null;
+        hex.blocked = false;
       }
       return hex;
     });
@@ -85,29 +95,30 @@ class GameLayout extends Component {
   render() {
     let { hexagons } = this.state;
     return (
-      <Layout className="game" size={{ x: 10, y: 10 }} flat={true} spacing={1.08} origin={{ x: -30, y: 0 }}>
-        {
-          hexagons.map((hex, i) => (
-            <Hexagon
-              key={i}
-              q={hex.q}
-              r={hex.r}
-              s={hex.s}
-              className={hex.blocked ? 'blocked' : null}
-              fill={(hex.image) ? HexUtils.getID(hex) : null}
-              data={hex}
-              onDragStart={(e, h) => this.onDragStart(e, h)}
-              onDragEnd={(e, h, s) => this.onDragEnd(e, h, s)}
-              onDrop={(e, h, t) => this.onDrop(e, h, t) }
-              onDragOver={(e, h) => this.onDragOver(e, h) }
-              onClick={(e, h) => this.onClick(e, h) }
-            >
-              <Text>{hex.text || HexUtils.getID(hex)}</Text>
-              { hex.image && <Pattern id={HexUtils.getID(hex)} link={hex.image} /> }
-            </Hexagon>
-          ))
-        }
-      </Layout>
+      <Layout className="game" size={{ x: 6.2, y: 6.2 }} flat={true} spacing={1.08} origin={{ x: -25.2, y: 0 }}>
+      <BackgroundImage />
+      {
+        hexagons.map((hex, i) => (
+          <Hexagon
+            key={i}
+            q={hex.q}
+            r={hex.r}
+            s={hex.s}
+            className={hex.blocked ? 'blocked' : null}
+            fill={(hex.image) ? HexUtils.getID(hex) : null}
+            data={hex}
+            onDragStart={(e, h) => this.onDragStart(e, h)}
+            onDragEnd={(e, h, s) => this.onDragEnd(e, h, s)}
+            onDrop={(e, h, t) => this.onDrop(e, h, t) }
+            onDragOver={(e, h) => this.onDragOver(e, h) }
+            onClick={(e, h) => this.onClick(e, h) }
+          >
+            <Text>{hex.text || HexUtils.getID(hex)}</Text>
+            { !!hex.image && <TokenPattern id={HexUtils.getID(hex)} link={hex.image} size={{ width: 10, height: 10}} position={{ x: 1.2, y: 0.2 }} /> }
+          </Hexagon>
+        ))
+      }
+    </Layout>
     );
   }
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { GridGenerator, Layout, Hexagon, Text, Pattern, HexUtils } from 'react-hexgrid';
 import './TilesLayout.css';
+import { TokenPattern } from './TokenPattern';
 
 class TilesLayout extends Component {
   constructor(props) {
@@ -8,7 +9,7 @@ class TilesLayout extends Component {
     // Initialize hexagons with some text and image
     const hexagons = GridGenerator.parallelogram(-1, 1, -1, 2).map((hexagon, index) => {
       return Object.assign({}, hexagon, {
-        text: `Cat #${index}`,
+        text: `#${index}`,
         image: process.env.PUBLIC_URL + `/assets/token-${index%3}.png`
       });
     })
@@ -54,7 +55,7 @@ class TilesLayout extends Component {
               onDragEnd={(e, h, s) => this.onDragEnd(e, h, s)}
             >
               <Text>{hex.text}</Text>
-              { !!hex.image && <Pattern id={HexUtils.getID(hex)} link={hex.image} /> }
+              { !!hex.image && <TokenPattern id={HexUtils.getID(hex)} link={hex.image} size={{ width: 10, height: 10}} position={{ x: 1.8, y: 2.5 }} /> }
             </Hexagon>
           ))
         }
