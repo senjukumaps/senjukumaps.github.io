@@ -24,16 +24,16 @@ p {
 }
 
 .game {
-  position: absolute;
+  /* position: absolute;
   top: 0;
-  left: 1em;
+  left: 1em; */
   border-right: 1px solid grey;
-  width: 49%;
+  /* width: 49%; */
 }
 
 .tiles {
-  position: absolute;
+  /* position: absolute;
   top: 0;
   right: 1em;
-  width: 49%;
+  width: 49%; */
 }

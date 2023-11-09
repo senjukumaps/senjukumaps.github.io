@@ -16,10 +16,9 @@ class BackgroundImage extends Component {
 class GameLayout extends Component {
   constructor(props) {
     super(props);
-    const hexagons = GridGenerator.hexagon(3);
-    // Add custom prop to couple of hexagons to indicate them being blocked
-    hexagons[0].blocked = true;
-    hexagons[1].blocked = true;
+    let hexagons = GridGenerator.hexagon(3);
+    // Set blocked property to false for all hexagons
+    hexagons = hexagons.map(hex => ({ ...hex, blocked: false }));
     this.state = { hexagons };
     log.setLevel('info');
   }
@@ -41,12 +40,13 @@ class GameLayout extends Component {
       }
       return hex;
     });
+    log.info('GL onDragEnd', hexas);
     this.setState({ hexagons: hexas });
   }
 
   onDragStart(event, source) {
     // If this tile is empty, let's disallow drag
-    if (!source.data.text) {
+    if (!source.data.image) {
       event.preventDefault();
     }
   }
