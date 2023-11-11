@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+// Allows us to set the positioning of the image in a hexagon
 export class TokenPattern extends Component {
   render() {
     const { id, link, size, position } = this.props;

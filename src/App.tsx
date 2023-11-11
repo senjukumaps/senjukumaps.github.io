@@ -6,13 +6,14 @@ import { Offcanvas, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-function App() {
+const App: React.FC = () => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   return (
+    <React.StrictMode>
     <div className="app">
       <Button variant="primary" onClick={handleShow}>
         Launch Sidebar
@@ -45,6 +46,7 @@ function App() {
         <GameLayout />
       </HexGrid>
     </div>
+    </React.StrictMode>
   );
 }
 

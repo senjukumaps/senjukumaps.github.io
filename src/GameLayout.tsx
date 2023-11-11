@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
-import { GridGenerator, Layout, Hexagon, Text, Pattern, HexUtils } from 'react-hexgrid';
+import { GridGenerator, Layout, Hexagon, Text, Pattern, HexUtils, Hex } from 'react-hexgrid';
 import './GameLayout.css';
 const log = require('loglevel');
 import { TokenPattern } from './TokenPattern';
 
+interface GameLayoutProps {
+  // Define the types of your props here
+}
+
+interface GameLayoutState {
+  hexagons: Hex[];
+}
 
 class BackgroundImage extends Component {
   render() {
@@ -13,8 +20,8 @@ class BackgroundImage extends Component {
   }
 }
 
-class GameLayout extends Component {
-  constructor(props) {
+class GameLayout extends Component<GameLayoutProps, GameLayoutState> {
+  constructor(props: GameLayoutProps) {
     super(props);
     let hexagons = GridGenerator.hexagon(3);
     // Set blocked property to false for all hexagons
@@ -24,12 +31,14 @@ class GameLayout extends Component {
   }
 
   // onClick event returns hex information
-  onClick(event, source) {
-    log.info(source.data);
+  onClick(event: React.MouseEvent, source: any) {
+    log.info('onClick event triggered with source:', source);
   }
 
-  // onDrop you can read information of the hexagon that initiated the drag
-  onDrop(event, source, targetProps) {
+  // onDrop you can read information of the hexagon that initiated the drag (targetProps)
+  // and the source object of the drop event
+  onDrop(event: React.DragEvent, source: any, targetProps: any) {
+    log.info('onDrop event triggered with source and targetProps:', source, targetProps);
     const { hexagons } = this.state;
     const hexas = hexagons.map(hex => {
       // When hexagon is dropped on this hexagon, copy it's image and text
@@ -37,6 +46,7 @@ class GameLayout extends Component {
         hex.image = targetProps.data.image;
         hex.text = targetProps.data.text;
         hex.blocked = true;
+        log.info('onDrop event triggered, updated hex:', hex);
       }
       return hex;
     });
@@ -44,7 +54,8 @@ class GameLayout extends Component {
     this.setState({ hexagons: hexas });
   }
 
-  onDragStart(event, source) {
+  onDragStart(event: React.DragEvent, source: any) {
+    log.info('onDragStart event triggered with source:', source);
     // If this tile is empty, let's disallow drag
     if (!source.data.image) {
       event.preventDefault();
@@ -52,7 +63,8 @@ class GameLayout extends Component {
   }
 
   // Decide here if you want to allow drop to this node
-  onDragOver(event, source) {
+  onDragOver(event: React.DragEvent, source: any) {
+    // log.info('onDragOver event triggered with source:', source);
     // Find blocked hexagons by their 'blocked' attribute
     const blockedHexas = this.state.hexagons.filter(h => h.blocked);
     // Find if this hexagon is listed in blocked ones
@@ -64,7 +76,7 @@ class GameLayout extends Component {
       // added to prevent undefined property error
       return;
     }
-    const { text } = source.data;
+    const { text } = source.state; // maybe source.data is better?
     // Allow drop, if not blocked and there's no content already
     if (!blocked && !text) {
       // Call preventDefault if you want to allow drop
@@ -73,7 +85,8 @@ class GameLayout extends Component {
   }
 
   // onDragEnd you can do some logic, e.g. to clean up hexagon if drop was success
-  onDragEnd(event, source, success) {
+  onDragEnd(event: React.DragEvent, source: any, success: boolean) {
+    log.info('onDragEnd event triggered with source and success:', source, success);
     if (!success) {
       return;
     }
@@ -83,8 +96,8 @@ class GameLayout extends Component {
     // When hexagon is successfully dropped, empty it's text and image
     const hexas = hexagons.map(hex => {
       if (HexUtils.equals(source.state.hex, hex)) {
-        hex.text = null;
-        hex.image = null;
+        hex.text = undefined;
+        hex.image = undefined;
         hex.blocked = false;
       }
       return hex;
@@ -93,32 +106,35 @@ class GameLayout extends Component {
   }
 
   render() {
-    let { hexagons } = this.state;
+    const hexagons: Hex[] = this.state.hexagons;
+    log.info('TL render', hexagons)
     return (
       <Layout className="game" size={{ x: 6.2, y: 6.2 }} flat={true} spacing={1.08} origin={{ x: -25.2, y: 0 }}>
-      <BackgroundImage />
-      {
-        hexagons.map((hex, i) => (
-          <Hexagon
-            key={i}
-            q={hex.q}
-            r={hex.r}
-            s={hex.s}
-            className={hex.blocked ? 'blocked' : null}
-            fill={(hex.image) ? HexUtils.getID(hex) : null}
-            data={hex}
-            onDragStart={(e, h) => this.onDragStart(e, h)}
-            onDragEnd={(e, h, s) => this.onDragEnd(e, h, s)}
-            onDrop={(e, h, t) => this.onDrop(e, h, t) }
-            onDragOver={(e, h) => this.onDragOver(e, h) }
-            onClick={(e, h) => this.onClick(e, h) }
-          >
+        <>
+        <BackgroundImage />
+        {
+          hexagons.map((hex: Hex, i: number) => (
+            <Hexagon
+              key={i}
+              q={hex.q}
+              r={hex.r}
+              s={hex.s}
+              className={hex.blocked ? 'blocked' : undefined}
+              fill={(hex.image) ? HexUtils.getID(hex) : undefined}
+              data={hex} // seems like data and state are not kept consistent, so keeping this for now
+              onDragStart={(e, h) => this.onDragStart(e, h)}
+              onDragEnd={(e, h, s) => this.onDragEnd(e, h, s)}
+              onDrop={(e, h, t) => this.onDrop(e, h, t) }
+              onDragOver={(e, h) => this.onDragOver(e, h) }
+              onClick={(e, h) => this.onClick(e, h) }
+            >
             <Text>{hex.text || HexUtils.getID(hex)}</Text>
             { !!hex.image && <TokenPattern id={HexUtils.getID(hex)} link={hex.image} size={{ width: 10, height: 10}} position={{ x: 1.2, y: 0.2 }} /> }
-          </Hexagon>
-        ))
-      }
-    </Layout>
+            </Hexagon>
+          ))
+        }
+        </>
+      </Layout>
     );
   }
 }
