@@ -1,6 +1,20 @@
 import React, { Component } from 'react';
+
+interface TokenPatternProps {
+  id: string;
+  link: string;
+  size: {
+    width: number;
+    height: number;
+  };
+  position: {
+    x: number;
+    y: number;
+  };
+}
+
 // Allows us to set the positioning of the image in a hexagon
-export class TokenPattern extends Component {
+export class TokenPattern extends Component<TokenPatternProps> {
   render() {
     const { id, link, size, position } = this.props;
     return (
