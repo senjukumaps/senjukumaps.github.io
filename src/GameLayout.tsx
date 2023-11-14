@@ -107,7 +107,7 @@ class GameLayout extends Component<GameLayoutProps, GameLayoutState> {
 
   render() {
     const hexagons: Hex[] = this.state.hexagons;
-    log.info('TL render', hexagons)
+    log.info('GL render', hexagons)
     return (
       <Layout className="game" size={{ x: 6.2, y: 6.2 }} flat={true} spacing={1.08} origin={{ x: -25.2, y: 0 }}>
         <>

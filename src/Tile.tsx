@@ -18,11 +18,7 @@ interface TileState {
 class Tile extends Component<TileProps, TileState> {
   constructor(props: TileProps) {
     super(props);
-    const TILE_HEX_OFFSET = 1;
-    // create a new hexagon. Needs a fake, unique coordinate or pattern breaks
-    // every coordinate can only have one pattern, so we use invalid R,0,0
-    // coordinates which won't actually appear in a real grid (as far as I can tell)
-    const hex = new Hex(TILE_HEX_OFFSET + this.props.id,0,0);
+    const hex = new Hex(0,0,0);
     hex.text = this.props.text;
     hex.image = process.env.PUBLIC_URL + "/assets/" + this.props.image;
     
@@ -44,20 +40,21 @@ class Tile extends Component<TileProps, TileState> {
     const {hex} = this.state;
     return (
         // Adjust origin so that tile will be centered around fake coordinate
-        <Layout className="tile" size={{ x: 10, y: 10 }} flat={false} spacing={1.01} origin={{ x: (1+this.props.id)*(-17.5), y: 0 }}>
+        <Layout className="tile" size={{ x: 10, y: 10 }} flat={true} spacing={0} origin={{ x: 0, y: 0 }}>
         <Hexagon
               key={this.props.id}
               q={hex.q}
               r={hex.r}
               s={hex.s}
-              fill={(hex.image) ? HexUtils.getID(hex) : undefined}
+              fill={(hex.image) ? "token-" + this.props.id : undefined}
               data={hex}
               onDragStart={(e, h) => this.onDragStart(e, h)}
               onDragEnd={(e, h, s) => this.onDragEnd(e, h, s)}
               onClick={(e, h) => this.onClick(e, h) }
             >
               <Text>{hex.text}</Text>
-              { !!hex.image && <TokenPattern id={HexUtils.getID(hex)} link={hex.image} size={{ width: 15, height: 15}} position={{ x: 1, y: 2}} /> }
+               {/* position is magic number to make it centered */}
+              { !!hex.image && <TokenPattern id={"token-" + this.props.id} link={hex.image} size={{ width: 15, height: 15}} position={{ x: 2.1, y: 1.2}} /> }
             </Hexagon>
         </Layout>
     );

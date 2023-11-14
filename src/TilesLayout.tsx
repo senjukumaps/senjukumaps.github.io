@@ -23,6 +23,8 @@ class TilesLayout extends Component<TilesLayoutProps, TilesLayoutState> {
       });
     })
     this.state = { hexagons };
+    log.console.error("SITLL USING TILESLAYOUT - this should be old unused code!");
+    
   }
 
   onDragStart(event: React.MouseEvent, source: any) {
