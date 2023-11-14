@@ -1,0 +1,28 @@
+
+svg .tile g {
+  fill: none
+}
+svg .tile g:hover {
+  fill-opacity: 0.2;
+}
+svg .tile g:hover text {
+  fill-opacity: 1;
+}
+
+svg .tile g polygon {
+  stroke: none;
+}
+svg .tile g text {
+  font-size: 0.22em;
+  fill: black;
+  fill-opacity: 0.7;
+  transition: fill-opacity .5s;
+}
+/* svg .tile path {
+  fill: none;
+  stroke: #7be3f6;
+  stroke-width: 0.2em;
+  stroke-opacity: 0.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+} */

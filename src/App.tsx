@@ -5,29 +5,28 @@ import TilesLayout from './TilesLayout';
 import { Offcanvas, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import Sidebar from './Sidebar';
 
 const App: React.FC = () => {
-  const [show, setShow] = useState(false);
+  const [sidebarVisible, setSidebarVisible] = useState(true);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const hideSidebar = () => setSidebarVisible(false);
+  const showSidebar = () => setSidebarVisible(true);
 
   return (
     <React.StrictMode>
     <div className="app">
-      <Button variant="primary" onClick={handleShow}>
+      <Button variant="primary" onClick={showSidebar}>
         Launch Sidebar
       </Button>
 
-      <Offcanvas show={show} onHide={handleClose} backdrop={false}>
+      <Offcanvas show={sidebarVisible} onHide={hideSidebar} backdrop={false}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Sidebar</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <h2>Header </h2>
-          <HexGrid width={200} height={200} viewBox="-15 -15 30 40">
-          <TilesLayout />
-          </HexGrid>
+          <h2>Tokens</h2>
+          <Sidebar></Sidebar>
         </Offcanvas.Body>
       </Offcanvas>
       
