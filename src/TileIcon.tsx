@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import { GridGenerator, Layout, Hexagon, Text, Pattern, HexUtils, Hex } from 'react-hexgrid';
-import './Tile.css';
+import './TileIcon.css';
 import { TokenPattern } from './TokenPattern';
 const log = require('loglevel');
 
-interface TileProps {
-  // Define the types of your props here
+interface TileIconProps {
   text: string;
   image: string;
   id: number;
 }
 
-interface TileState {
+interface TileIconState {
   hex: Hex;
 }
 
-class Tile extends Component<TileProps, TileState> {
-  constructor(props: TileProps) {
+// A single Hex Tile Icon that can be used outside of the gameboard 
+class TileIcon extends Component<TileIconProps, TileIconState> {
+  constructor(props: TileIconProps) {
     super(props);
     const hex = new Hex(0,0,0);
     hex.text = this.props.text;
@@ -31,16 +31,16 @@ class Tile extends Component<TileProps, TileState> {
 
   // onDragEnd you can do some logic, e.g. to clean up hexagon if drop was success
   onDragEnd(event: React.MouseEvent, source: any, success: any) {
-    log.info('TL onDragEnd');
+    log.info('TileIcon onDragEnd');
   }
   onClick(event: React.MouseEvent, source: any) {
-    log.info('Tile onClick:', source, this.state.hex);
+    log.info('TileIcon onClick:', source);
   }
   render() {
     const {hex} = this.state;
     return (
         // Adjust origin so that tile will be centered around fake coordinate
-        <Layout className="tile" size={{ x: 10, y: 10 }} flat={true} spacing={0} origin={{ x: 0, y: 0 }}>
+        <Layout className="tileIcon" size={{ x: 10, y: 10 }} flat={true} spacing={0} origin={{ x: 0, y: 0 }}>
         <Hexagon
               key={this.props.id}
               q={hex.q}
@@ -61,4 +61,4 @@ class Tile extends Component<TileProps, TileState> {
   }
 }
 
-export default Tile;
+export default TileIcon;

@@ -1,18 +1,18 @@
 
-svg .tile g {
+svg .tileIcon g {
   fill: none
 }
-svg .tile g:hover {
+svg .tileIcon g:hover {
   fill-opacity: 0.2;
 }
-svg .tile g:hover text {
+svg .tileIcon g:hover text {
   fill-opacity: 1;
 }
 
-svg .tile g polygon {
+svg .tileIcon g polygon {
   stroke: none;
 }
-svg .tile g text {
+svg .tileIcon g text {
   font-size: 0.22em;
   fill: black;
   fill-opacity: 0.7;
