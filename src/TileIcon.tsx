@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { GridGenerator, Layout, Hexagon, Text, Pattern, HexUtils, Hex } from 'react-hexgrid';
 import './TileIcon.css';
-import { TokenPattern } from './TokenPattern';
+import { TokenImage } from './TokenImage';
 const log = require('loglevel');
 
 interface TileIconProps {
@@ -54,7 +54,7 @@ class TileIcon extends Component<TileIconProps, TileIconState> {
             >
               <Text>{hex.text}</Text>
                {/* position is magic number to make it centered */}
-              { !!hex.image && <TokenPattern id={"token-" + this.props.id} link={hex.image} size={{ width: 15, height: 15}} position={{ x: 2.1, y: 1.2}} /> }
+              { !!hex.image && <TokenImage id={"token-" + this.props.id} link={hex.image} size={{ width: 15, height: 15}} position={{ x: 2.1, y: 1.2}} /> }
             </Hexagon>
         </Layout>
     );

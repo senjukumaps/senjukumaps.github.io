@@ -1,6 +1,6 @@
 
 svg .tileIcon g {
-  fill: none
+  fill: none;
 }
 svg .tileIcon g:hover {
   fill-opacity: 0.2;

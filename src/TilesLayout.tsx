@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { GridGenerator, Layout, Hexagon, Text, Pattern, HexUtils, Hex } from 'react-hexgrid';
 import './TilesLayout.css';
-import { TokenPattern } from './TokenPattern';
+import { TokenImage } from './TokenImage';
 const log = require('loglevel');
 
 interface TilesLayoutProps {
@@ -71,7 +71,7 @@ class TilesLayout extends Component<TilesLayoutProps, TilesLayoutState> {
               onClick={(e, h) => this.onClick(e, h) }
             >
               <Text>{hex.text}</Text>
-              { !!hex.image && <TokenPattern id={HexUtils.getID(hex)} link={hex.image} size={{ width: 5, height: 5}} position={{ x: .9, y: 1.25}} /> }
+              { !!hex.image && <TokenImage id={HexUtils.getID(hex)} link={hex.image} size={{ width: 5, height: 5}} position={{ x: .9, y: 1.25}} /> }
             </Hexagon>
           ))
         }

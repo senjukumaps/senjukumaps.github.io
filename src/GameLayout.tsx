@@ -2,16 +2,19 @@ import React, { Component } from 'react';
 import { GridGenerator, Layout, Hexagon, Text, Pattern, HexUtils, Hex } from 'react-hexgrid';
 import './GameLayout.css';
 const log = require('loglevel');
-import { TokenPattern } from './TokenPattern';
+import { TokenImage } from './TokenImage';
+import GameTile from "./GameTile"
 
 interface GameLayoutProps {
   // Define the types of your props here
 }
 
 interface GameLayoutState {
-  hexagons: Hex[];
+  hexagons: GameTile[];
+  tokenSize: { width: number; height: number; };
 }
 
+// Represents the background image for a map section
 class BackgroundImage extends Component {
   render() {
     return (
@@ -20,19 +23,27 @@ class BackgroundImage extends Component {
   }
 }
 
+// Represents a section of a map composed of a set of hexagons
 class GameLayout extends Component<GameLayoutProps, GameLayoutState> {
   constructor(props: GameLayoutProps) {
     super(props);
-    let hexagons = GridGenerator.hexagon(3);
-    // Set blocked property to false for all hexagons
-    hexagons = hexagons.map(hex => ({ ...hex, blocked: false }));
-    this.state = { hexagons };
+    let hexagons = GridGenerator.hexagon(3).map((hex, index) => new GameTile(hex));
+    let tokenSize = { width: 10, height: 10}
+    this.state = { hexagons, tokenSize };
     log.setLevel('info');
   }
 
-  // onClick event returns hex information
   onClick(event: React.MouseEvent, source: any) {
     log.info('onClick event triggered with source:', source);
+    const { hexagons } = this.state;
+    const newHexagons = hexagons.map(hex => {
+    if (HexUtils.equals(source.state.hex, hex)) {
+      hex.rotate(true);
+      return hex;
+    }
+    return hex;
+    });
+    this.setState({ hexagons: newHexagons });
   }
 
   // onDrop you can read information of the hexagon that initiated the drag (targetProps)
@@ -106,21 +117,22 @@ class GameLayout extends Component<GameLayoutProps, GameLayoutState> {
   }
 
   render() {
-    const hexagons: Hex[] = this.state.hexagons;
+    const hexagons: GameTile[] = this.state.hexagons;
+    const tokenSize = this.state.tokenSize;
     log.info('GL render', hexagons)
     return (
       <Layout className="game" size={{ x: 6.2, y: 6.2 }} flat={true} spacing={1.08} origin={{ x: -25.2, y: 0 }}>
         <>
         <BackgroundImage />
         {
-          hexagons.map((hex: Hex, i: number) => (
+          hexagons.map((hex: GameTile, i: number) => (
             <Hexagon
               key={i}
               q={hex.q}
               r={hex.r}
               s={hex.s}
               className={hex.blocked ? 'blocked' : undefined}
-              fill={(hex.image) ? HexUtils.getID(hex) : undefined}
+              fill={undefined}
               data={hex} // seems like data and state are not kept consistent, so keeping this for now
               onDragStart={(e, h) => this.onDragStart(e, h)}
               onDragEnd={(e, h, s) => this.onDragEnd(e, h, s)}
@@ -128,8 +140,8 @@ class GameLayout extends Component<GameLayoutProps, GameLayoutState> {
               onDragOver={(e, h) => this.onDragOver(e, h) }
               onClick={(e, h) => this.onClick(e, h) }
             >
-            <Text>{hex.text || HexUtils.getID(hex)}</Text>
-            { !!hex.image && <TokenPattern id={HexUtils.getID(hex)} link={hex.image} size={{ width: 10, height: 10}} position={{ x: 1.2, y: 0.2 }} /> }
+            <title>{hex.text}</title>
+            { !!hex.image && <TokenImage id={HexUtils.getID(hex)} rotation={hex.rotation} link={hex.image} size={tokenSize} /> }
             </Hexagon>
           ))
         }
