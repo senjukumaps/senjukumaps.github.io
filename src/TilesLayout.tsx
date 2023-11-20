@@ -71,7 +71,7 @@ class TilesLayout extends Component<TilesLayoutProps, TilesLayoutState> {
               onClick={(e, h) => this.onClick(e, h) }
             >
               <Text>{hex.text}</Text>
-              { !!hex.image && <TokenImage id={HexUtils.getID(hex)} link={hex.image} size={{ width: 5, height: 5}} position={{ x: .9, y: 1.25}} /> }
+              { !!hex.image && <TokenImage id={HexUtils.getID(hex)} link={hex.image} size={{ width: 5, height: 5}} /> }
             </Hexagon>
           ))
         }

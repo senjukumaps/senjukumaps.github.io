@@ -1,15 +1,9 @@
 body {
-  margin: 0;
+  /* margin: 0; */
   padding: 0em 1em;
   font-family: sans-serif;
   background: #133b43;
   color: white;
-  text-align: center;
-}
-
-p {
-  max-width: 80%;
-  margin: 10px auto;
 }
 
 [draggable] {
@@ -23,12 +17,8 @@ p {
   user-drag: element;
 }
 
-.game {
-  /* position: absolute;
-  top: 0;
-  left: 1em; */
-  border-right: 1px solid grey;
-  /* width: 49%; */
+.game h2 {
+  text-align: center;
 }
 
 .tiles {

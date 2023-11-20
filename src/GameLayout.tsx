@@ -121,7 +121,7 @@ class GameLayout extends Component<GameLayoutProps, GameLayoutState> {
     const tokenSize = this.state.tokenSize;
     log.info('GL render', hexagons)
     return (
-      <Layout className="game" size={{ x: 6.2, y: 6.2 }} flat={true} spacing={1.08} origin={{ x: -25.2, y: 0 }}>
+      <Layout className="game" size={{ x: 6.2, y: 6.2 }} flat={true} spacing={1.08} origin={{ x: -25.1, y: 0 }}>
         <>
         <BackgroundImage />
         {

@@ -54,7 +54,7 @@ class TileIcon extends Component<TileIconProps, TileIconState> {
             >
               <Text>{hex.text}</Text>
                {/* position is magic number to make it centered */}
-              { !!hex.image && <TokenImage id={"token-" + this.props.id} link={hex.image} size={{ width: 15, height: 15}} position={{ x: 2.1, y: 1.2}} /> }
+              { !!hex.image && <TokenImage id={"token-" + this.props.id} link={hex.image} size={{ width: 15, height: 15}} /> }
             </Hexagon>
         </Layout>
     );

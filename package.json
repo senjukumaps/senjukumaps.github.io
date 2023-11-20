@@ -1,7 +1,7 @@
 {
   "name": "hexgrid-drag-and-drop",
   "version": "0.1.0",
-  "homepage": "https://hellenic.github.io/react-hexgrid/examples/drag-and-drop/",
+  "homepage": "https://senjutsumaps.github.io/",
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "bootstrap": "^5.3.2",
@@ -16,7 +16,9 @@
     "start": "GENERATE_SOURCEMAP=false && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "browserslist": {
     "production": [
@@ -33,6 +35,7 @@
   "devDependencies": {
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
-    "typescript": "^5.2.2"
+    "gh-pages": "^6.0.0",
+    "typescript": "^4.9.5"
   }
 }

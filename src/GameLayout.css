@@ -19,8 +19,8 @@ svg .game g:hover {
 }
 
 svg .game g polygon {
-  stroke: #7be3f6;
-  stroke-width: 0.2;
+  stroke: rgba(167,191,224, 0.5);
+  stroke-width: 0.5;
   transition: fill-opacity .25s;
 }
 
