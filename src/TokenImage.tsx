@@ -18,14 +18,25 @@ export class TokenImage extends Component<TokenPatternProps> {
   render() {
     const { id, link, size, rotation } = this.props;
     return (
+        <>
           <image 
-            xlinkHref={link} 
+            xlinkHref={process.env.PUBLIC_URL + "/assets/hexagon.svg"} 
             x={-size.width/2} 
             y={-size.height/2} 
-            width={size.width} 
-            height={size.height}  
+            width={size.width*1.0} 
+            height={size.height*1.0}  
             preserveAspectRatio="xMidYMid slice" 
             transform={`rotate(${rotation}, 0, 0)`}          />
+          <image 
+            xlinkHref={link} 
+            x={-size.width*0.75/2} 
+            y={-size.height*0.75/2} 
+            width={size.width*0.75} 
+            height={size.height*0.75}  
+            preserveAspectRatio="xMidYMid slice" 
+            />
+        </>
     );
+
   }
 }
