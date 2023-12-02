@@ -39,6 +39,8 @@ class GameLayout extends Component<GameLayoutProps, GameLayoutState> {
     const newHexagons = hexagons.map(hex => {
     if (HexUtils.equals(source.state.hex, hex)) {
       hex.rotate(true);
+      hex.colorIndex = (hex.colorIndex + 1) % hex.colors.length;
+      hex.color = hex.colors[hex.colorIndex];
       return hex;
     }
     return hex;
@@ -131,7 +133,8 @@ class GameLayout extends Component<GameLayoutProps, GameLayoutState> {
               q={hex.q}
               r={hex.r}
               s={hex.s}
-              className={hex.blocked ? 'blocked' : undefined}
+              className={hex.blocked ? 'blocked' : undefined} // Not used anymore
+              style={{ fill: hex.color }}
               fill={undefined}
               data={hex} // seems like data and state are not kept consistent, so keeping this for now
               onDragStart={(e, h) => this.onDragStart(e, h)}

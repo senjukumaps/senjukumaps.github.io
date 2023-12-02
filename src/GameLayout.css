@@ -10,12 +10,17 @@ Russian blue pattern:
 #03090a
 */
 svg .game g {
-  fill: rgb(169, 127, 68);
-  fill-opacity: 0;
+  fill: transparent;
+  fill-opacity: 0.4;
 }
 
-svg .game g:hover {
-  fill-opacity: 0.25;
+svg .game g.hexagon-group g.hexagon {
+  fill: inherit;
+  fill-opacity: inherit;
+}
+
+svg .game g.hexagon-group:hover {
+  fill-opacity: 0.75;
 }
 
 svg .game g polygon {
@@ -30,12 +35,4 @@ svg .game g text {
   fill-opacity: 0;
   transition: fill-opacity .5s;
 }
-svg .game g.blocked polygon {
-  fill-opacity: 0.25; 
-}
-svg .game g.blocked polygon:hover {
-  fill-opacity: 0.5; 
-}
-
-
 
