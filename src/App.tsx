@@ -18,9 +18,11 @@ const App: React.FunctionComponent = (): JSX.Element => {
           </Col>
           <Col className='game'>
             <h2>Map</h2>
+            <div id="map">
             <HexGrid width={1000} height={1000} viewBox="-75 -50 100 100">
               <GameLayout />
             </HexGrid>
+            </div>
           </Col>
         </Row>
         <Row>
