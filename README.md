@@ -24,7 +24,7 @@
 
 ## Running the Project
 
-To run the project, you need to install the project's dependencies using `npm install`. Then, you can start the project using `npm start`.
+To run the project, you need to install the project's dependencies using `npm install`. Then, you can start the project using `npm start`. To deploy to github pages, use `npm run deploy`.
 
 ## Conclusion
 

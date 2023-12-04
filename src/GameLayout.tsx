@@ -68,7 +68,6 @@ class GameLayout extends Component<GameLayoutProps, GameLayoutState> {
       }
       return hex;
     });
-    log.info('GL onDragEnd', hexas);
     this.setState({ hexagons: hexas });
   }
 
@@ -98,6 +97,12 @@ class GameLayout extends Component<GameLayoutProps, GameLayoutState> {
     // Allow drop, if not blocked and there's no content already
     if (!blocked && !text) {
       // Call preventDefault if you want to allow drop
+      event.preventDefault();
+    }
+    else {
+      // This will allow us to replace an existing tile by dragging onto it
+      // or we can drag onto ourself to delete it
+      // kind of a hack, but it works.
       event.preventDefault();
     }
   }
