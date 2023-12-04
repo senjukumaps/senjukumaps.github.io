@@ -1,9 +1,6 @@
 body {
-  /* margin: 0; */
-  padding: 0em 1em;
   font-family: sans-serif;
-  background: #133b43;
-  color: white;
+
 }
 
 [draggable] {
@@ -21,9 +18,3 @@ body {
   text-align: center;
 }
 
-.tiles {
-  /* position: absolute;
-  top: 0;
-  right: 1em;
-  width: 49%; */
-}

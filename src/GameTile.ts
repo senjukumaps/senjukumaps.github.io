@@ -8,7 +8,7 @@ const log = require('loglevel');
 class GameTile extends Hex {
   rotation: number;
   color: string; // Added BG color state
-  colors: string[] = ['transparent', 'red', 'green', 'blue', 'yellow'];
+  colors: string[] = ['transparent', 'red', 'yellow', 'green', 'blue'];
   colorIndex: number = 0;
 
   [key: string]: any;

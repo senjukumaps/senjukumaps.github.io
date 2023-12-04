@@ -38,9 +38,13 @@ class GameLayout extends Component<GameLayoutProps, GameLayoutState> {
     const { hexagons } = this.state;
     const newHexagons = hexagons.map(hex => {
     if (HexUtils.equals(source.state.hex, hex)) {
-      hex.rotate(true);
-      hex.colorIndex = (hex.colorIndex + 1) % hex.colors.length;
-      hex.color = hex.colors[hex.colorIndex];
+      if(hex.blocked) {
+        hex.rotate(true);
+      }
+      else {
+        hex.colorIndex = (hex.colorIndex + 1) % hex.colors.length;
+        hex.color = hex.colors[hex.colorIndex];
+      }
       return hex;
     }
     return hex;
@@ -59,6 +63,7 @@ class GameLayout extends Component<GameLayoutProps, GameLayoutState> {
         hex.image = targetProps.data.image;
         hex.text = targetProps.data.text;
         hex.blocked = true;
+        hex.rotation = targetProps.data.rotation ? targetProps.data.rotation : 0;
         log.info('onDrop event triggered, updated hex:', hex);
       }
       return hex;
@@ -121,7 +126,6 @@ class GameLayout extends Component<GameLayoutProps, GameLayoutState> {
   render() {
     const hexagons: GameTile[] = this.state.hexagons;
     const tokenSize = this.state.tokenSize;
-    log.info('GL render', hexagons)
     return (
       <Layout className="game" size={{ x: 6.2, y: 6.2 }} flat={true} spacing={1.08} origin={{ x: -25.1, y: 0 }}>
         <>

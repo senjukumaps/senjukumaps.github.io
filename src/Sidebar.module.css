@@ -1,0 +1,12 @@
+/* Sidebar specific styles */
+
+.tokenItem {
+  padding: 0px 0px;
+  text-align:center;
+  font-size: 0.8em;
+}
+
+.tokenItem p {
+  margin: 0;
+  padding: 0;
+}
