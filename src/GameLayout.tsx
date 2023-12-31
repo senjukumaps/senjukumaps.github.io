@@ -5,6 +5,8 @@ const log = require('loglevel');
 import { TokenImage } from './TokenImage';
 import GameTile from "./GameTile"
 
+const VERSION: number = 1;
+
 interface GameLayoutProps {
   // Define the types of your props here
 }
@@ -35,10 +37,6 @@ class GameLayout extends Component<GameLayoutProps, GameLayoutState> {
     let hexagons = GridGenerator.hexagon(3).map((hex, index) => new GameTile(hex));
     let tokenSize = { width: 10, height: 10};
     return { hexagons: hexagons, tokenSize: tokenSize };
-  }
-
-  resetMap() {
-    this.setState(this.getInitialState());
   }
 
   onClick(event: React.MouseEvent, source: any) {
@@ -139,13 +137,14 @@ class GameLayout extends Component<GameLayoutProps, GameLayoutState> {
   getGameStateAsJson() {
     // For each hexagon, check call hex.save() and add it to the array only if it is not null
     const simplifiedHexagons = this.state.hexagons.reduce<{ [key: string]: any; }[]>((acc, hex) => {
-      const hexState = hex.save();
+      const hexState = hex.save(VERSION);
       if(hexState != null) {
         return [...acc, hexState];
       }
       return acc;
     }, []);
-    const gameStateJson = JSON.stringify(simplifiedHexagons);
+    const saveState: {[key: string]: any;} = {'version': VERSION, 'hexagons': simplifiedHexagons};
+    const gameStateJson = JSON.stringify(saveState);
     const saveStateTextarea = document.getElementById('saveState') as HTMLTextAreaElement;
     if (saveStateTextarea) {
       saveStateTextarea.value = gameStateJson;
@@ -156,13 +155,14 @@ class GameLayout extends Component<GameLayoutProps, GameLayoutState> {
 
   setGameStateFromJson(json: string) {
     // convert json to array of hexagon states
-    const hexStates = JSON.parse(json);
+    const saveState = JSON.parse(json);
+    const hexStates = saveState.hexagons;
+    const ver = saveState.version;
     log.info('getGameStateFromJson hexStates:', hexStates);
-    this.resetMap();
     // For each hexagon state, find the corresponding hexagon and call hex.restore()
-    const { hexagons } = this.state;
+    const { hexagons } = this.getInitialState();
+    log.info('setGameStateFromJson reset hexas:', this.state.hexagons);
     const hexas = hexagons.map(hex => {
-      log.info('getGameStateFromJson hex:', hex);
       let hexState;
       for (let i = 0; i < hexStates.length; i++) {
         if (HexUtils.equals(hexStates[i], hex)) {
@@ -171,15 +171,12 @@ class GameLayout extends Component<GameLayoutProps, GameLayoutState> {
         }
       }
       if(hexState) {
-        log.info('Restoring hex:', hexState);
-        hex.restore(hexState);
+        hex.restore(hexState, ver);
       }
       return hex;
     });
     this.setState({ hexagons: hexas });
-  }
-
-  loadMap() {
+    log.info('setGameStateFromJson restored hexas:', this.state.hexagons);
   }
 
   render() {
