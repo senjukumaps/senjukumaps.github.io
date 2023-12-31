@@ -4,7 +4,7 @@ import GameLayout from './GameLayout';
 import { Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import Sidebar from './Sidebar';
+import Tokenbar from './Tokenbar';
 import Menubar from './Menubar';
 const log = require('loglevel');
 
@@ -35,7 +35,7 @@ class App extends React.Component {
         <Container fluid>
           <Row>
             <Col>
-              <Sidebar></Sidebar>
+              <Tokenbar></Tokenbar>
             </Col>
           </Row>
           <Row>

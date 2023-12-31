@@ -2,7 +2,7 @@ import React from 'react';
 import { ListGroup } from 'react-bootstrap';
 import TileIcon from './TileIcon';
 import { HexGrid } from 'react-hexgrid';
-import styles from './Sidebar.module.css';
+import styles from './Tokenbar.module.css';
 
 interface TokenType {
   name: string;
@@ -13,7 +13,7 @@ interface TokenType {
 
 const tokens: Record<string, TokenType> = require('./tokens.json');
 
-class Sidebar extends React.Component {
+class Tokenbar extends React.Component {
   render() {
     return (
       <ListGroup id="sidebarListGroup" horizontal>
@@ -33,4 +33,4 @@ class Sidebar extends React.Component {
   }
 }
 
-export default Sidebar;
+export default Tokenbar;
