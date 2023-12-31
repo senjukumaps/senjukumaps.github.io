@@ -7,7 +7,7 @@ const log = require('loglevel');
 interface TileIconProps {
   text: string;
   image: string | undefined;
-  id: number;
+  id: string;
 }
 
 interface TileIconState {
