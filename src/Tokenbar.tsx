@@ -5,6 +5,7 @@ import { HexGrid } from 'react-hexgrid';
 import styles from './Tokenbar.module.css';
 
 interface TokenType {
+  // TODO: this should be refactored into types.tsx or some other shared file
   name: string;
   image: string;
   allowRotate: boolean;
