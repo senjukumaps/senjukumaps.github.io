@@ -27,10 +27,18 @@ class BackgroundImage extends Component {
 class GameLayout extends Component<GameLayoutProps, GameLayoutState> {
   constructor(props: GameLayoutProps) {
     super(props);
-    let hexagons = GridGenerator.hexagon(3).map((hex, index) => new GameTile(hex));
-    let tokenSize = { width: 10, height: 10}
-    this.state = { hexagons, tokenSize };
+    this.state = this.getInitialState();
     log.setLevel('info');
+  }
+
+  getInitialState() {
+    let hexagons = GridGenerator.hexagon(3).map((hex, index) => new GameTile(hex));
+    let tokenSize = { width: 10, height: 10};
+    return { hexagons: hexagons, tokenSize: tokenSize };
+  }
+
+  resetMap() {
+    this.setState(this.getInitialState());
   }
 
   onClick(event: React.MouseEvent, source: any) {
@@ -126,6 +134,52 @@ class GameLayout extends Component<GameLayoutProps, GameLayoutState> {
       return hex;
     });
     this.setState({ hexagons: hexas });
+  }
+
+  getGameStateAsJson() {
+    // For each hexagon, check call hex.save() and add it to the array only if it is not null
+    const simplifiedHexagons = this.state.hexagons.reduce<{ [key: string]: any; }[]>((acc, hex) => {
+      const hexState = hex.save();
+      if(hexState != null) {
+        return [...acc, hexState];
+      }
+      return acc;
+    }, []);
+    const gameStateJson = JSON.stringify(simplifiedHexagons);
+    const saveStateTextarea = document.getElementById('saveState') as HTMLTextAreaElement;
+    if (saveStateTextarea) {
+      saveStateTextarea.value = gameStateJson;
+    }
+    
+    return JSON.stringify(simplifiedHexagons);
+  }
+
+  setGameStateFromJson(json: string) {
+    // convert json to array of hexagon states
+    const hexStates = JSON.parse(json);
+    log.info('getGameStateFromJson hexStates:', hexStates);
+    this.resetMap();
+    // For each hexagon state, find the corresponding hexagon and call hex.restore()
+    const { hexagons } = this.state;
+    const hexas = hexagons.map(hex => {
+      log.info('getGameStateFromJson hex:', hex);
+      let hexState;
+      for (let i = 0; i < hexStates.length; i++) {
+        if (HexUtils.equals(hexStates[i], hex)) {
+          hexState = hexStates[i];
+          break;
+        }
+      }
+      if(hexState) {
+        log.info('Restoring hex:', hexState);
+        hex.restore(hexState);
+      }
+      return hex;
+    });
+    this.setState({ hexagons: hexas });
+  }
+
+  loadMap() {
   }
 
   render() {
