@@ -16,7 +16,7 @@ class Tokenbar extends React.Component {
           return (
             <ListGroup.Item key={key} className={styles.tokenItem}>
               <HexGrid width={90} height={90} viewBox="-10 -10 20 20">
-                <TileIcon text={token.name} image={token.image} id={key}/>
+                <TileIcon text={token.name} id={key}/>
               </HexGrid>
               <p>{token.name}</p>
             </ListGroup.Item>

@@ -7,7 +7,6 @@ const log = require('loglevel');
 
 interface TileIconProps {
   text: string;
-  image: string | undefined;
   id: string;
   
 }
@@ -22,7 +21,7 @@ class TileIcon extends Component<TileIconProps, TileIconState> {
     super(props);
     const hex = new GameTile(new Hex(0,0,0), 0);
     hex.text = this.props.text;
-    hex.image = this.props.image ? process.env.PUBLIC_URL + "/assets/" + this.props.image : undefined;
+    hex.image = this.props.text;
     hex.blocked = true;
     hex.name = this.props.text;
     

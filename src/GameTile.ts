@@ -3,6 +3,8 @@ import { GridGenerator, Layout, Hexagon, Text, Pattern, HexUtils, Hex } from 're
 import './TileIcon.css';
 import { TokenImage } from './TokenImage';
 import { TokenType } from './types';
+const tokens: Record<string, TokenType> = require('./tokens.json');
+
 const log = require('loglevel');
 
 // A GameTile is a Hex that can be rotated and could store other state
@@ -50,11 +52,12 @@ class GameTile extends Hex implements TokenType{
       if (this.color !== "transparent") {
         saveState["c"] = this.colorIndex;
       }
-      if (this.rotation !== 0) {
-        saveState["rot"] = this.rotation;
-      }
       if (this.image !== undefined) {
-        saveState["i"] = this.image;
+        // if there is an image, save the ID and rotation to restore later
+        saveState["id"] = this.name;
+        if (this.rotation !== 0) {
+          saveState["rot"] = this.rotation;
+        }
       }
       if (Object.keys(saveState).length > 0)  {
         saveState["q"] = this.q;
@@ -88,12 +91,15 @@ class GameTile extends Hex implements TokenType{
         this.colorIndex = saveState["c"];
         this.color = this.colors[this.colorIndex];
       }
-      if (saveState.hasOwnProperty("rot")) {
-        this.rotation = saveState["rot"];
-      }
-      if (saveState.hasOwnProperty("i")) {
-        this.image = saveState["i"];
+      if (saveState.hasOwnProperty("id")) {
+        this.image = tokens[saveState["id"]].name;
+        this.name = tokens[saveState["id"]].name;
+        this.text = tokens[saveState["id"]].name;
+        // FIXME: this works, but is very redundant
         this.blocked = true;
+        if (saveState.hasOwnProperty("rot")) {
+          this.rotation = saveState["rot"];
+        }
       }
     }
     else {

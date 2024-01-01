@@ -28,7 +28,7 @@ export class TokenImage extends Component<TokenPatternProps> {
             preserveAspectRatio="xMidYMid slice" 
             transform={`rotate(${rotation}, 0, 0)`}          />
           <image 
-            xlinkHref={link} 
+            xlinkHref={process.env.PUBLIC_URL + "/assets/" + link + ".svg"}
             x={-size.width*0.75/2} 
             y={-size.height*0.75/2} 
             width={size.width*0.75} 
