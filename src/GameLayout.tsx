@@ -8,7 +8,7 @@ import GameTile from "./GameTile"
 const VERSION: number = 1;
 
 interface GameLayoutProps {
-  // Define the types of your props here
+  // Properties can provide initial data to the component
 }
 
 interface GameLayoutState {
@@ -40,7 +40,7 @@ class GameLayout extends Component<GameLayoutProps, GameLayoutState> {
   }
 
   onClick(event: React.MouseEvent, source: any) {
-    log.info('onClick event triggered with source:', source);
+    log.debug('onClick event triggered with source:', source);
     const { hexagons } = this.state;
     const newHexagons = hexagons.map(hex => {
     if (HexUtils.equals(source.state.hex, hex)) {
@@ -61,7 +61,7 @@ class GameLayout extends Component<GameLayoutProps, GameLayoutState> {
   // onDrop you can read information of the hexagon that initiated the drag (targetProps)
   // and the source object of the drop event
   onDrop(event: React.DragEvent, source: any, targetProps: any) {
-    log.info('onDrop event triggered with source and targetProps:', source, targetProps);
+    log.debug('onDrop event triggered with source and targetProps:', source, targetProps);
     const { hexagons } = this.state;
     const hexas = hexagons.map(hex => {
       // When hexagon is dropped on this hexagon, copy it's image and text
@@ -75,51 +75,26 @@ class GameLayout extends Component<GameLayoutProps, GameLayoutState> {
   }
 
   onDragStart(event: React.DragEvent, source: any) {
-    log.info('onDragStart event triggered with source:', source);
-    // If this tile is empty, let's disallow drag
+    log.debug('onDragStart event triggered with source:', source);
+    // If this tile is empty, it can't be dragged
     if (!source.data.image) {
       event.preventDefault();
     }
   }
 
-  // Decide here if you want to allow drop to this node
+  // Allow drop on any hexagon in this layout
   onDragOver(event: React.DragEvent, source: any) {
-    // log.info('onDragOver event triggered with source:', source);
-    // Find blocked hexagons by their 'blocked' attribute
-    const blockedHexas = this.state.hexagons.filter(h => h.blocked);
-    // Find if this hexagon is listed in blocked ones
-    const blocked = blockedHexas.find(blockedHex => {
-      return HexUtils.equals(source.state.hex, blockedHex);
-    });
-
-    if (!source) {
-      // added to prevent undefined property error
-      return;
-    }
-    const { text } = source.state; // maybe source.data is better?
-    // Allow drop, if not blocked and there's no content already
-    if (!blocked && !text) {
-      // Call preventDefault if you want to allow drop
-      event.preventDefault();
-    }
-    else {
-      // This will allow us to replace an existing tile by dragging onto it
-      // or we can drag onto ourself to delete it
-      // kind of a hack, but it works.
-      event.preventDefault();
-    }
+    event.preventDefault();
   }
 
   // onDragEnd you can do some logic, e.g. to clean up hexagon if drop was success
   onDragEnd(event: React.DragEvent, source: any, success: boolean) {
-    log.info('onDragEnd event triggered with source and success:', source, success);
+    log.debug('onDragEnd event triggered with source and success:', source, success);
     if (!success) {
       return;
     }
-    // TODO Drop the whole hex from array, currently somethings wrong with the patterns
-
     const { hexagons } = this.state;
-    // When hexagon is successfully dropped, empty it's text and image
+    // When hexagon is successfully dropped, clear source hexagon
     const hexas = hexagons.map(hex => {
       if (HexUtils.equals(source.state.hex, hex)) {
         hex.clearToken();
