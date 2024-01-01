@@ -66,10 +66,7 @@ class GameLayout extends Component<GameLayoutProps, GameLayoutState> {
     const hexas = hexagons.map(hex => {
       // When hexagon is dropped on this hexagon, copy it's image and text
       if (HexUtils.equals(source.state.hex, hex)) {
-        hex.image = targetProps.data.image;
-        hex.text = targetProps.data.text;
-        hex.blocked = true;
-        hex.rotation = targetProps.data.rotation ? targetProps.data.rotation : 0;
+        hex.setToken(targetProps.data);
         log.info('onDrop event triggered, updated hex:', hex);
       }
       return hex;
@@ -125,9 +122,7 @@ class GameLayout extends Component<GameLayoutProps, GameLayoutState> {
     // When hexagon is successfully dropped, empty it's text and image
     const hexas = hexagons.map(hex => {
       if (HexUtils.equals(source.state.hex, hex)) {
-        hex.text = undefined;
-        hex.image = undefined;
-        hex.blocked = false;
+        hex.clearToken();
       }
       return hex;
     });

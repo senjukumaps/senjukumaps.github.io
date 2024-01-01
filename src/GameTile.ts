@@ -2,14 +2,19 @@ import React, { Component } from 'react';
 import { GridGenerator, Layout, Hexagon, Text, Pattern, HexUtils, Hex } from 'react-hexgrid';
 import './TileIcon.css';
 import { TokenImage } from './TokenImage';
+import { TokenType } from './types';
 const log = require('loglevel');
 
 // A GameTile is a Hex that can be rotated and could store other state
-class GameTile extends Hex {
+class GameTile extends Hex implements TokenType{
   rotation: number;
   color: string; 
   colors: string[] = ['transparent', 'red', 'yellow', 'green', 'blue'];
   colorIndex: number = 0;
+  name: string = "Empty";
+  allowRotate: boolean = true;
+  image: string | undefined;
+  blocked: boolean;
 
   [key: string]: any;
 
@@ -22,6 +27,20 @@ class GameTile extends Hex {
 
   rotate(clockwise: boolean = true) {
     this.rotation += clockwise ? 60 : -60;
+  }
+
+  setToken(token: TokenType) {
+    this.name = token.name;
+    this.text = token.name;
+    this.image = token.image;
+    this.blocked = token.blocked;
+    this.rotation = token.rotation ? token.rotation : 0;
+  }
+  clearToken() {
+    this.name = "Empty";
+    this.text = "Empty";
+    this.image = undefined;
+    this.blocked = false;
   }
 
   save(version: number) {

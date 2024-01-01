@@ -1,26 +1,30 @@
 import React, { Component } from 'react';
-import { GridGenerator, Layout, Hexagon, Text, Pattern, HexUtils, Hex } from 'react-hexgrid';
+import { Layout, Hexagon, Text, Hex } from 'react-hexgrid';
 import './TileIcon.css';
 import { TokenImage } from './TokenImage';
+import GameTile from './GameTile';
 const log = require('loglevel');
 
 interface TileIconProps {
   text: string;
   image: string | undefined;
   id: string;
+  
 }
 
 interface TileIconState {
-  hex: Hex;
+  hex: GameTile;
 }
 
 // A single Hex Tile Icon that can be used outside of the gameboard 
 class TileIcon extends Component<TileIconProps, TileIconState> {
   constructor(props: TileIconProps) {
     super(props);
-    const hex = new Hex(0,0,0);
+    const hex = new GameTile(new Hex(0,0,0), 0);
     hex.text = this.props.text;
     hex.image = this.props.image ? process.env.PUBLIC_URL + "/assets/" + this.props.image : undefined;
+    hex.blocked = true;
+    hex.name = this.props.text;
     
     this.state = {hex };
   }
@@ -31,10 +35,10 @@ class TileIcon extends Component<TileIconProps, TileIconState> {
 
   // onDragEnd you can do some logic, e.g. to clean up hexagon if drop was success
   onDragEnd(event: React.MouseEvent, source: any, success: any) {
-    log.info('TileIcon onDragEnd');
+    log.debug('TileIcon onDragEnd');
   }
   onClick(event: React.MouseEvent, source: any) {
-    log.info('TileIcon onClick:', source);
+    log.debug('TileIcon onClick:', source);
   }
   render() {
     const {hex} = this.state;

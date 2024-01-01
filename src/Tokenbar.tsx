@@ -3,14 +3,7 @@ import { ListGroup } from 'react-bootstrap';
 import TileIcon from './TileIcon';
 import { HexGrid } from 'react-hexgrid';
 import styles from './Tokenbar.module.css';
-
-interface TokenType {
-  // TODO: this should be refactored into types.tsx or some other shared file
-  name: string;
-  image: string;
-  allowRotate: boolean;
-  // add other properties if any
-}
+import { TokenType } from './types';
 
 const tokens: Record<string, TokenType> = require('./tokens.json');
 
