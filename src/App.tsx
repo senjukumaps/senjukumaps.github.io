@@ -8,7 +8,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/share/:id" element={<SharePage />} />
+        <Route path="/share/v1/:id" element={<SharePage />} />
       </Routes>
     </Router>
   );

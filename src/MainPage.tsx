@@ -12,22 +12,44 @@ const log = require('loglevel');
 class MainPage extends React.Component {
   gameLayoutRef = React.createRef<GameLayout>();
 
-  saveAllTiles = () => {
+  shareTiles = () => {
     if(this.gameLayoutRef.current != null) {
       const gameState = this.gameLayoutRef.current.getGameStateAsJson();
       let compressedGameState = LZString.compressToEncodedURIComponent(gameState);
     
-      log.info('saved url: ' + process.env.PUBLIC_URL + "/share/" + compressedGameState);
-      log.info(gameState.length)
+      let link = location.origin + "/share/v1/" + compressedGameState;
+      log.info('saved url: ' + link);
+      log.info(gameState.length);
+      navigator.clipboard.writeText(link);
+      // open link in new tab
+      window.open(link, '_blank');
     }
   }
-  restoreAllTiles = () => {
+  saveTiles = () => {
+    // unused
+    if(this.gameLayoutRef.current != null) {
+      const gameState = this.gameLayoutRef.current.getGameStateAsJson();
+      let compressedGameState = LZString.compressToEncodedURIComponent(gameState);
+      const saveStateTextarea = document.getElementById('saveState') as HTMLTextAreaElement;
+      if (saveStateTextarea) {
+        saveStateTextarea.value = gameState;
+      }
+      
+    }
+  }
+  restoreTiles = () => {
+    // unused
     if(this.gameLayoutRef.current != null) {
       const saveStateTextarea = document.getElementById('saveState') as HTMLTextAreaElement;
       if (saveStateTextarea) {
         this.gameLayoutRef.current.setGameStateFromJson(saveStateTextarea.value);
       }
       
+    }
+  }
+  resetTiles = () => {
+    if(this.gameLayoutRef.current != null) {
+      this.gameLayoutRef.current.resetGameState();
     }
   }
 
@@ -44,18 +66,13 @@ class MainPage extends React.Component {
           <Row>
             <Col className='game'>
               <HexGrid width={1000} height={1000} viewBox="-75 -50 100 100">
-                <GameLayout ref={this.gameLayoutRef} />
+                <GameLayout ref={this.gameLayoutRef} allowEditing={true}/>
               </HexGrid>
             </Col>
           </Row>
           <Row>
             <Col>
-            <Menubar onSave={this.saveAllTiles} onRestore={this.restoreAllTiles} />
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-            <textarea id="saveState" rows={10} cols={100}></textarea>
+            <Menubar onShare={this.shareTiles} onSave={this.saveTiles} onRestore={this.restoreTiles} onClear={this.resetTiles} />
             </Col>
           </Row>
           <Row>

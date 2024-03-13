@@ -116,12 +116,8 @@ class GameLayout extends Component<GameLayoutProps, GameLayoutState> {
     }, []);
     const saveState: {[key: string]: any;} = {'version': VERSION, 'hexagons': simplifiedHexagons};
     const gameStateJson = JSON.stringify(saveState);
-    const saveStateTextarea = document.getElementById('saveState') as HTMLTextAreaElement;
-    if (saveStateTextarea) {
-      saveStateTextarea.value = gameStateJson;
-    }
     
-    return JSON.stringify(simplifiedHexagons);
+    return gameStateJson;
   }
 
   setGameStateFromJson(json: string) {
@@ -150,6 +146,10 @@ class GameLayout extends Component<GameLayoutProps, GameLayoutState> {
     log.info('setGameStateFromJson restored hexas:', this.state.hexagons);
   }
 
+  resetGameState() {
+    this.setState(this.getInitialState());
+  }
+
   render() {
     const hexagons: GameTile[] = this.state.hexagons;
     const tokenSize = this.state.tokenSize;
@@ -168,11 +168,13 @@ class GameLayout extends Component<GameLayoutProps, GameLayoutState> {
               style={{ fill: hex.color }}
               fill={undefined}
               data={hex} // seems like data and state are not kept consistent, so keeping this for now
-              onDragStart={(e, h) => this.onDragStart(e, h)}
-              onDragEnd={(e, h, s) => this.onDragEnd(e, h, s)}
-              onDrop={(e, h, t) => this.onDrop(e, h, t) }
-              onDragOver={(e, h) => this.onDragOver(e, h) }
-              onClick={(e, h) => this.onClick(e, h) }
+              {...(this.props.allowEditing ? {
+                onDragStart: (e, h) => this.onDragStart(e, h),
+                onDragEnd: (e, h, s) => this.onDragEnd(e, h, s),
+                onDrop: (e, h, t) => this.onDrop(e, h, t),
+                onDragOver: (e, h) => this.onDragOver(e, h),
+                onClick: (e, h) => this.onClick(e, h),
+              } : {})}
             >
             <title>{hex.text}</title>
             { !!hex.image && <TokenImage id={HexUtils.getID(hex)} rotation={hex.rotation} link={hex.image} size={tokenSize} /> }
