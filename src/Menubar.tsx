@@ -4,7 +4,7 @@ import { Button, ListGroup } from 'react-bootstrap';
 
 interface MenubarProps {
   onSave: () => void;
-  onRestore: () => void;
+  onRestore: (id:any) => void;
 }
 
 class Menubar extends React.Component<MenubarProps> {
@@ -19,8 +19,8 @@ class Menubar extends React.Component<MenubarProps> {
   handleSave = () => {
     this.props.onSave();
   }
-  handleRestore = () => {
-    this.props.onRestore();
+  handleRestore = (id: any) => {
+    this.props.onRestore(id);
   }
 }
 

@@ -6,10 +6,12 @@
     "@emotion/react": "^11.11.1",
     "bootstrap": "^5.3.2",
     "loglevel": "^1.8.1",
+    "lz-string": "^1.5.0",
     "react": "18.2.0",
     "react-bootstrap": "^2.9.1",
     "react-dom": "18.2.0",
     "react-hexgrid": "*",
+    "react-router-dom": "^6.21.1",
     "react-scripts": "^5.0.1"
   },
   "scripts": {

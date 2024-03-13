@@ -9,6 +9,7 @@ const VERSION: number = 1;
 
 interface GameLayoutProps {
   // Properties can provide initial data to the component
+  allowEditing?: boolean;
 }
 
 interface GameLayoutState {
