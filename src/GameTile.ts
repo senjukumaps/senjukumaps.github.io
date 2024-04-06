@@ -93,7 +93,7 @@ class GameTile extends Hex implements TokenType{
         this.color = this.colors[this.colorIndex];
       }
       if (saveState.hasOwnProperty("id")) {
-        this.image = tokens[saveState["id"]].name;
+        this.image = tokens[saveState["id"]].image;
         this.name = tokens[saveState["id"]].name;
         this.text = tokens[saveState["id"]].name;
         // FIXME: this works, but is very redundant

@@ -10,7 +10,7 @@ const tokens: Record<string, TokenType> = require('./tokens.json');
 class Tokenbar extends React.Component {
   render() {
     // Define rows based on token types
-    let rows = [["s1-core", "s1-terrain", "extra"], ["s1-char"]];
+    let rows = [["s1-core", "s1-terrain", "extra"], ["s1-char"], ["custom"]];
 
     return (
       <div>

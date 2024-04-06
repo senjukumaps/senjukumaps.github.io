@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="1200pt" height="1200pt" version="1.1" viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg">
- <g fill="#fff">
+ <g fill="#000">
   <path d="m150 1012.5h900l-37.5-75h-825z"/>
   <path d="m93.75 1050-37.5 75h1087.5l-37.5-75z"/>
   <path d="m243.75 562.5h112.5v131.25h-112.5z"/>
