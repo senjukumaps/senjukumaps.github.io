@@ -1,4 +1,10 @@
 /* Sidebar specific styles */
+#sidebarListGroup {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start; /* Adjust this as needed */
+  max-width: 690px; /* Adjust based on your item width to fit exactly 11 items per row */
+}
 
 .tokenItem {
   padding: 0px 0px;

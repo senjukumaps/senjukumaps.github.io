@@ -17,6 +17,7 @@ class GameTile extends Hex implements TokenType{
   allowRotate: boolean = true;
   image: string | undefined;
   blocked: boolean;
+  type: string = "tile";
 
   [key: string]: any;
 

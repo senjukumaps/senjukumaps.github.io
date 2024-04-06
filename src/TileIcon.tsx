@@ -6,9 +6,11 @@ import GameTile from './GameTile';
 const log = require('loglevel');
 
 interface TileIconProps {
-  text: string;
+  // TODO: make this a standard interface type used everywhere
+  text: string | undefined;
   id: string;
-  
+  image: string | undefined;
+  name: string;
 }
 
 interface TileIconState {
@@ -21,9 +23,9 @@ class TileIcon extends Component<TileIconProps, TileIconState> {
     super(props);
     const hex = new GameTile(new Hex(0,0,0), 0);
     hex.text = this.props.text;
-    hex.image = this.props.text;
+    hex.image = this.props.image;
     hex.blocked = true;
-    hex.name = this.props.text;
+    hex.name = this.props.name;
     
     this.state = {hex };
   }
@@ -55,9 +57,9 @@ class TileIcon extends Component<TileIconProps, TileIconState> {
               onDragEnd={(e, h, s) => this.onDragEnd(e, h, s)}
               onClick={(e, h) => this.onClick(e, h) }
             >
-              <Text>{hex.text}</Text>
                {/* position is magic number to make it centered */}
               { !!hex.image && <TokenImage id={"token-" + this.props.id} link={hex.image} size={{ width: 15, height: 15}} /> }
+              { !hex.image && <Text>{hex.text}</Text>}
             </Hexagon>
         </Layout>
     );
