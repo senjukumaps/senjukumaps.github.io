@@ -1,7 +1,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 
 <!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
-<svg fill="#4a4a4a" height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 184.751 184.751" xml:space="preserve" stroke="#7a7a7a">
+<svg fill="#777" height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 184.751 184.751" xml:space="preserve" stroke="#444">
 
 <g id="SVGRepo_bgCarrier" stroke-width="0"/>
 
@@ -10,7 +10,7 @@
 <g id="SVGRepo_iconCarrier"> 
   <path d="M0,92.375l46.188-80h92.378l46.185,80l-46.185,80H46.188L0,92.375z"/> 
   <!-- Adding an arrow facing downwards at the bottom of the svg -->
-  <path fill="#999" d="M92.375,184.751 l-23.094,-23.094 l46.188,0 z"/>
+  <path fill="#ddd" d="M92.375,184.751 l-23.094,-23.094 l46.188,0 z"/>
 </g>
 
 </svg>
