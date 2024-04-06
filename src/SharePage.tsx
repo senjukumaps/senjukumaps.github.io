@@ -47,6 +47,12 @@ class SharePage extends React.Component {
                 </HexGrid>
               </Col>
             </Row>
+            <Row>
+            <Col>
+            <p><a href="/">Create your own map here!</a></p>
+            <p style={{ fontSize: 'smaller' }}>This is a fan creation for Senjutsu, a board game by Stone Sword Games. The character icons and ice background image were created by Stone Sword games. The app is intended only for non-commercial fan use. Stone Sword Games retains copyright to all of its material. Other character icons are by 'Hey Rabbit' and are licensed from <a href="https://thenounproject.com/creator/heyrabbit/">The Noun Project</a>.</p>
+            </Col>
+            </Row>
           </Container>
         </div>
       </React.StrictMode>
